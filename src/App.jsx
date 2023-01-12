@@ -3,7 +3,6 @@ import "./App.scss";
 
 // icons
 import { FaBook } from "react-icons/fa";
-import { FaTrash, FaPaintBrush } from "react-icons/fa";
 
 // components
 import { Form } from "./components/Form";
@@ -108,37 +107,11 @@ function App() {
         </div>
       </section>
       <section className="saved-brands-container">
-        <div>
-          <SavedBrandsComponent brands={savedBrands} deleteItem={deleteItem} />
-        </div>
-
-        {savedBrands.map(({ id, primaryColor, primaryFont, secondaryFont }) => {
-          return (
-            <div
-              key={id}
-              className="saved-brand"
-              style={{ background: primaryColor }}
-            >
-              <div className="button-container">
-                <button
-                  className="icon-button"
-                  onClick={() =>
-                    previewItem(primaryColor, primaryFont, secondaryFont)
-                  }
-                >
-                  <FaPaintBrush />
-                </button>
-                <button className="icon-button" onClick={() => deleteItem(id)}>
-                  <FaTrash />
-                </button>
-              </div>
-              <p style={{ fontFamily: `'${primaryFont}'` }}>{primaryFont}</p>
-              <p style={{ fontFamily: `'${secondaryFont}'` }}>
-                {secondaryFont}
-              </p>
-            </div>
-          );
-        })}
+        <SavedBrandsComponent
+          brands={savedBrands}
+          deleteItem={deleteItem}
+          previewItem={previewItem}
+        />
       </section>
     </div>
   );
