@@ -1,7 +1,27 @@
-import { useState } from "react";
-import { Form } from "./components/Form";
+import { useEffect, useState } from "react";
 import "./App.scss";
+
+// icons
 import { FaBook } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
+
+// components
+import { Form } from "./components/Form";
+import { SavedBrands } from "./components/SavedBrands";
+
+// libraries
+import { v4 as uuidv4 } from "uuid";
+
+const getLocalStorage = () => {
+  let savedBrands = localStorage.getItem("Saved Brands");
+
+  if (savedBrands) {
+    // converts string to object
+    return JSON.parse(localStorage.getItem("Saved Brands"));
+  } else {
+    return [];
+  }
+};
 
 function App() {
   const [branding, setBranding] = useState({
@@ -10,12 +30,25 @@ function App() {
     secondaryFont: "Arial",
   });
 
-  const handleSubmit = () => {
-    console.log("Submit Handled");
+  const [savedBrands, setSavedBrands] = useState(getLocalStorage);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const newBrand = {
+      ...branding,
+      id: uuidv4(),
+    };
+
+    setSavedBrands([...savedBrands, newBrand]);
   };
 
+  // everytime savedBrands state changes, call useEffect and put it in local storage
+  useEffect(() => {
+    localStorage.setItem("Saved Brands", JSON.stringify(savedBrands));
+  }, [savedBrands]);
+
   const handleChangeColor = (color) => {
-    console.log(color.hex);
     setBranding({
       ...branding,
       primaryColor: color.hex,
@@ -23,7 +56,6 @@ function App() {
   };
 
   const handlePrimaryFontChange = (e) => {
-    console.log(e.target.value);
     setBranding({
       ...branding,
       primaryFont: e.target.value,
@@ -31,15 +63,19 @@ function App() {
   };
 
   const handleSecondaryFontChange = (e) => {
-    console.log(e.target.value);
     setBranding({
       ...branding,
       secondaryFont: e.target.value,
     });
   };
 
+  const deleteItem = (id) => {
+    const newSavedBrands = savedBrands.filter((brand) => brand.id !== id);
+    setSavedBrands(newSavedBrands);
+  };
+
   return (
-    <div class="wrapper">
+    <div className="wrapper">
       <header>
         <h1>Brand Picker</h1>
       </header>
@@ -57,10 +93,10 @@ function App() {
             <h2 style={{ fontFamily: `'${branding.primaryFont}'` }}>
               Primary Font Family Content Title
             </h2>
-            <span
-              class="h2-border"
+            <hr
+              className="h2-border"
               style={{ background: branding.primaryColor }}
-            ></span>
+            ></hr>
             <div
               className="description-icon"
               style={{ fontFamily: `'${branding.secondaryFont}'` }}
@@ -73,6 +109,36 @@ function App() {
             </div>
           </div>
         </div>
+      </section>
+      <section className="saved-brands-container">
+        {/* {savedBrands.length > 0 && (
+          <div>
+            <SavedBrands brands={savedBrands} deleteItem={deleteItem} />
+          </div>
+        )} */}
+
+        {savedBrands.length > 0 &&
+          savedBrands.map(
+            ({ id, primaryColor, primaryFont, secondaryFont }) => {
+              return (
+                <div
+                  key={id}
+                  className="saved-brand"
+                  style={{ background: primaryColor }}
+                >
+                  <button onClick={() => deleteItem(id)}>
+                    <FaTrash />
+                  </button>
+                  <p style={{ fontFamily: `'${primaryFont}'` }}>
+                    {primaryFont}
+                  </p>
+                  <p style={{ fontFamily: `'${secondaryFont}'` }}>
+                    {secondaryFont}
+                  </p>
+                </div>
+              );
+            }
+          )}
       </section>
     </div>
   );

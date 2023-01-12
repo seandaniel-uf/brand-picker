@@ -39,7 +39,7 @@ export const Form = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <label class="color-label">Primary Color</label>
+      <label className="color-label">Primary Color</label>
       <ChromePicker color={primaryColor} onChange={handleChangeColor} />
       <div className="label-select-container">
         <label>Primary Font</label>
@@ -65,7 +65,11 @@ export const Form = ({
           })}
         </select>
       </div>
-      <button type="submit" class="btn" style={{ background: primaryColor }}>
+      <button
+        type="submit"
+        className="btn"
+        style={{ background: primaryColor }}
+      >
         Save
       </button>
     </form>
