@@ -3,7 +3,7 @@ import "./App.scss";
 
 // icons
 import { FaBook } from "react-icons/fa";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaPaintBrush } from "react-icons/fa";
 
 // components
 import { Form } from "./components/Form";
@@ -55,17 +55,18 @@ function App() {
     });
   };
 
-  const handlePrimaryFontChange = (e) => {
+  const handleChangeFonts = (e) => {
     setBranding({
       ...branding,
-      primaryFont: e.target.value,
+      [e.target.name]: [e.target.value],
     });
   };
 
-  const handleSecondaryFontChange = (e) => {
+  const previewItem = (primaryColor, primaryFont, secondaryFont) => {
     setBranding({
-      ...branding,
-      secondaryFont: e.target.value,
+      primaryColor: primaryColor,
+      primaryFont: primaryFont,
+      secondaryFont: secondaryFont,
     });
   };
 
@@ -83,8 +84,7 @@ function App() {
         <Form
           primaryColor={branding.primaryColor}
           handleChangeColor={handleChangeColor}
-          handlePrimaryFontChange={handlePrimaryFontChange}
-          handleSecondaryFontChange={handleSecondaryFontChange}
+          handleChangeFonts={handleChangeFonts}
           handleSubmit={handleSubmit}
         />
         <div className="card">
@@ -126,9 +126,22 @@ function App() {
                   className="saved-brand"
                   style={{ background: primaryColor }}
                 >
-                  <button onClick={() => deleteItem(id)}>
-                    <FaTrash />
-                  </button>
+                  <div className="button-container">
+                    <button
+                      className="icon-button"
+                      onClick={() =>
+                        previewItem(primaryColor, primaryFont, secondaryFont)
+                      }
+                    >
+                      <FaPaintBrush />
+                    </button>
+                    <button
+                      className="icon-button"
+                      onClick={() => deleteItem(id)}
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
                   <p style={{ fontFamily: `'${primaryFont}'` }}>
                     {primaryFont}
                   </p>

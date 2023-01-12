@@ -65,11 +65,8 @@ form {
     p {
       width: 240px;
     }
-    button {
-      margin-left: auto;
-      svg {
-        font-size: 30px;
-      }
+    svg {
+      font-size: 22px;
     }
   }
 }
@@ -89,8 +86,11 @@ form {
     height: 100px;
     border-radius: 10px;
     margin-bottom: 20px;
-    button {
+    .button-container {
       text-align: right;
+    }
+    .icon-button:first-child {
+      margin-right: 5px;
     }
   }
 }

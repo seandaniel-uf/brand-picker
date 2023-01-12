@@ -4,8 +4,7 @@ export const Form = ({
   handleSubmit,
   primaryColor,
   handleChangeColor,
-  handlePrimaryFontChange,
-  handleSecondaryFontChange,
+  handleChangeFonts,
 }) => {
   const primaryFontOptions = [
     {
@@ -43,7 +42,7 @@ export const Form = ({
       <ChromePicker color={primaryColor} onChange={handleChangeColor} />
       <div className="label-select-container">
         <label>Primary Font</label>
-        <select onChange={(e) => handlePrimaryFontChange(e)}>
+        <select name="primaryFont" onChange={(e) => handleChangeFonts(e)}>
           {primaryFontOptions.map(({ id, fontFamily }) => {
             return (
               <option key={id} value={fontFamily}>
@@ -55,7 +54,7 @@ export const Form = ({
       </div>
       <div className="label-select-container">
         <label>Secondary Font</label>
-        <select onChange={(e) => handleSecondaryFontChange(e)}>
+        <select name="secondaryFont" onChange={(e) => handleChangeFonts(e)}>
           {secondaryFontOptions.map(({ id, fontFamily }) => {
             return (
               <option key={id} value={fontFamily}>
