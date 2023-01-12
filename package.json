@@ -9,10 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "node-sass": "^8.0.0",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
-    "react-router": "^6.6.2"
+    "react-icons": "^4.7.1",
+    "react-router": "^6.6.2",
+    "sass": "^1.57.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

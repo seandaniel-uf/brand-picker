@@ -1,6 +1,12 @@
 import { ChromePicker } from "react-color";
 
-export const Form = ({ primaryColor, handleChangeColor, handleChangeFont }) => {
+export const Form = ({
+  handleSubmit,
+  primaryColor,
+  handleChangeColor,
+  handlePrimaryFontChange,
+  handleSecondaryFontChange,
+}) => {
   const primaryFontOptions = [
     {
       id: 1,
@@ -19,7 +25,7 @@ export const Form = ({ primaryColor, handleChangeColor, handleChangeFont }) => {
   const secondaryFontOptions = [
     {
       id: 4,
-      fontFamily: "Monsterrat",
+      fontFamily: "Arial",
     },
     {
       id: 5,
@@ -32,26 +38,36 @@ export const Form = ({ primaryColor, handleChangeColor, handleChangeFont }) => {
   ];
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
+      <label class="color-label">Primary Color</label>
       <ChromePicker color={primaryColor} onChange={handleChangeColor} />
-      <select onChange={(e) => handleChangeFont(e)}>
-        {primaryFontOptions.map(({ id, fontFamily }) => {
-          return (
-            <option key={id} value={fontFamily}>
-              {fontFamily}
-            </option>
-          );
-        })}
-      </select>
-      <select onChange={(e) => handleChangeFont(e)}>
-        {secondaryFontOptions.map(({ id, fontFamily }) => {
-          return (
-            <option key={id} value={fontFamily}>
-              {fontFamily}
-            </option>
-          );
-        })}
-      </select>
+      <div className="label-select-container">
+        <label>Primary Font</label>
+        <select onChange={(e) => handlePrimaryFontChange(e)}>
+          {primaryFontOptions.map(({ id, fontFamily }) => {
+            return (
+              <option key={id} value={fontFamily}>
+                {fontFamily}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <div className="label-select-container">
+        <label>Secondary Font</label>
+        <select onChange={(e) => handleSecondaryFontChange(e)}>
+          {secondaryFontOptions.map(({ id, fontFamily }) => {
+            return (
+              <option key={id} value={fontFamily}>
+                {fontFamily}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <button type="submit" class="btn" style={{ background: primaryColor }}>
+        Save
+      </button>
     </form>
   );
 };
