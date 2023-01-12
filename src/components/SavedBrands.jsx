@@ -1,7 +1,7 @@
 // icons
 import { FaTrash } from "react-icons/fa";
 
-export const SavedBrands = ({ brands, deleteItem }) => {
+export const SavedBrandsComponent = ({ brands, deleteItem }) => {
   {
     brands.map(({ id, primaryColor, primaryFont, secondaryFont }) => {
       return (

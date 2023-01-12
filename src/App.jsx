@@ -7,7 +7,7 @@ import { FaTrash, FaPaintBrush } from "react-icons/fa";
 
 // components
 import { Form } from "./components/Form";
-import { SavedBrands } from "./components/SavedBrands";
+import { SavedBrandsComponent } from "./components/SavedBrands";
 
 // libraries
 import { v4 as uuidv4 } from "uuid";
@@ -29,17 +29,14 @@ function App() {
     primaryFont: "Shrikhand",
     secondaryFont: "Arial",
   });
-
   const [savedBrands, setSavedBrands] = useState(getLocalStorage);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const newBrand = {
       ...branding,
       id: uuidv4(),
     };
-
     setSavedBrands([...savedBrands, newBrand]);
   };
 
@@ -58,7 +55,7 @@ function App() {
   const handleChangeFonts = (e) => {
     setBranding({
       ...branding,
-      [e.target.name]: [e.target.value],
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -111,47 +108,37 @@ function App() {
         </div>
       </section>
       <section className="saved-brands-container">
-        {/* {savedBrands.length > 0 && (
-          <div>
-            <SavedBrands brands={savedBrands} deleteItem={deleteItem} />
-          </div>
-        )} */}
+        <div>
+          <SavedBrandsComponent brands={savedBrands} deleteItem={deleteItem} />
+        </div>
 
-        {savedBrands.length > 0 &&
-          savedBrands.map(
-            ({ id, primaryColor, primaryFont, secondaryFont }) => {
-              return (
-                <div
-                  key={id}
-                  className="saved-brand"
-                  style={{ background: primaryColor }}
+        {savedBrands.map(({ id, primaryColor, primaryFont, secondaryFont }) => {
+          return (
+            <div
+              key={id}
+              className="saved-brand"
+              style={{ background: primaryColor }}
+            >
+              <div className="button-container">
+                <button
+                  className="icon-button"
+                  onClick={() =>
+                    previewItem(primaryColor, primaryFont, secondaryFont)
+                  }
                 >
-                  <div className="button-container">
-                    <button
-                      className="icon-button"
-                      onClick={() =>
-                        previewItem(primaryColor, primaryFont, secondaryFont)
-                      }
-                    >
-                      <FaPaintBrush />
-                    </button>
-                    <button
-                      className="icon-button"
-                      onClick={() => deleteItem(id)}
-                    >
-                      <FaTrash />
-                    </button>
-                  </div>
-                  <p style={{ fontFamily: `'${primaryFont}'` }}>
-                    {primaryFont}
-                  </p>
-                  <p style={{ fontFamily: `'${secondaryFont}'` }}>
-                    {secondaryFont}
-                  </p>
-                </div>
-              );
-            }
-          )}
+                  <FaPaintBrush />
+                </button>
+                <button className="icon-button" onClick={() => deleteItem(id)}>
+                  <FaTrash />
+                </button>
+              </div>
+              <p style={{ fontFamily: `'${primaryFont}'` }}>{primaryFont}</p>
+              <p style={{ fontFamily: `'${secondaryFont}'` }}>
+                {secondaryFont}
+              </p>
+            </div>
+          );
+        })}
       </section>
     </div>
   );
