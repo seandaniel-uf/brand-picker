@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import "./App.scss";
 
-// icons
-import { FaBook } from "react-icons/fa";
-
 // components
 import { Form } from "./components/Form";
 import { SavedBrandsComponent } from "./components/SavedBrands";
+import { Card } from "./components/Card";
 
 // libraries
 import { v4 as uuidv4 } from "uuid";
@@ -83,28 +81,11 @@ function App() {
           handleChangeFonts={handleChangeFonts}
           handleSubmit={handleSubmit}
         />
-        <div className="card">
-          <img src="https://content.cdntwrk.com/files/aHViPTEyOTE1MiZjbWQ9aXRlbWVkaXRvcmltYWdlJmZpbGVuYW1lPWl0ZW1lZGl0b3JpbWFnZV82Mzg0YzgwZDVmYTA0LmpwZyZ2ZXJzaW9uPTAwMDAmc2lnPTExODExOGRmMzZhNjIxZjRiMmM3YmFlZDFmMjVjMTQ1" />
-          <div className="card-content-container">
-            <h2 style={{ fontFamily: `'${branding.primaryFont}'` }}>
-              Primary Font Family Content Title
-            </h2>
-            <hr
-              className="h2-border"
-              style={{ background: branding.primaryColor }}
-            ></hr>
-            <div
-              className="description-icon"
-              style={{ fontFamily: `'${branding.secondaryFont}'` }}
-            >
-              <p>
-                Here is a paragraph including Secondary Font Family. Lorem Ipsum
-                dolor sit conseceteteur ala la sit dor lorem ipsum
-              </p>
-              <FaBook style={{ fill: branding.primaryColor }} />
-            </div>
-          </div>
-        </div>
+        <Card
+          primaryColor={branding.primaryColor}
+          primaryFont={branding.primaryFont}
+          secondaryFont={branding.secondaryFont}
+        />
       </section>
       <section className="saved-brands-container">
         <SavedBrandsComponent
