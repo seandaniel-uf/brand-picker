@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useBrandStore } from "./brandStore";
 import "./App.scss";
 
 // icons
@@ -9,67 +10,81 @@ import { Form } from "./components/Form";
 import { SavedBrandsComponent } from "./components/SavedBrands";
 
 // libraries
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 
-const getLocalStorage = () => {
-  let savedBrands = localStorage.getItem("Saved Brands");
+// const getLocalStorage = () => {
+//   let savedBrands = localStorage.getItem("Saved Brands");
 
-  if (savedBrands) {
-    // converts string to object
-    return JSON.parse(localStorage.getItem("Saved Brands"));
-  } else {
-    return [];
-  }
-};
+//   if (savedBrands) {
+//     // converts string to object
+//     return JSON.parse(localStorage.getItem("Saved Brands"));
+//   } else {
+//     return [];
+//   }
+// };
 
 function App() {
-  const [branding, setBranding] = useState({
-    primaryColor: "#94CDC6",
-    primaryFont: "Shrikhand",
-    secondaryFont: "Arial",
-  });
-  const [savedBrands, setSavedBrands] = useState(getLocalStorage);
+  // const [branding, setBranding] = useState({
+  //   primaryColor: "#94CDC6",
+  //   primaryFont: "Shrikhand",
+  //   secondaryFont: "Arial",
+  // });
+  const branding = useBrandStore((state) => state.branding);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newBrand = {
-      ...branding,
-      id: uuidv4(),
-    };
-    setSavedBrands([...savedBrands, newBrand]);
-  };
+  // how do I get local storage, and savedBrands?
+  const getLocalStorage = useBrandStore((state) => state.getLocalStorage);
+  getLocalStorage();
+  // const [savedBrands, setSavedBrands] = useState(getLocalStorage);
+  const savedBrands = useBrandStore((state) => state.savedBrands);
+
+  const handleSubmit = useBrandStore((state) => state.handleSubmit);
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const newBrand = {
+  //     ...branding,
+  //     id: uuidv4(),
+  //   };
+  //   setSavedBrands([...savedBrands, newBrand]);
+  // };
 
   // everytime savedBrands state changes, call useEffect and put it in local storage
+  const setItem = useBrandStore((state) => state.setItem);
   useEffect(() => {
-    localStorage.setItem("Saved Brands", JSON.stringify(savedBrands));
+    // localStorage.setItem("Saved Brands", JSON.stringify(savedBrands));
+    setItem();
   }, [savedBrands]);
 
-  const handleChangeColor = (color) => {
-    setBranding({
-      ...branding,
-      primaryColor: color.hex,
-    });
-  };
+  const handleChangeColor = useBrandStore((state) => state.handleChangeColor);
+  // const handleChangeColor = (color) => {
+  //   setBranding({
+  //     ...branding,
+  //     primaryColor: color.hex,
+  //   });
+  // };
 
-  const handleChangeFonts = (e) => {
-    setBranding({
-      ...branding,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const handleChangeFonts = useBrandStore((state) => state.handleChangeFonts);
+  // const handleChangeFonts = (e) => {
+  //   setBranding({
+  //     ...branding,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
-  const previewItem = (primaryColor, primaryFont, secondaryFont) => {
-    setBranding({
-      primaryColor: primaryColor,
-      primaryFont: primaryFont,
-      secondaryFont: secondaryFont,
-    });
-  };
+  const previewItem = useBrandStore((state) => state.previewItem);
+  // const previewItem = (primaryColor, primaryFont, secondaryFont) => {
+  //   setBranding({
+  //     primaryColor: primaryColor,
+  //     primaryFont: primaryFont,
+  //     secondaryFont: secondaryFont,
+  //   });
+  // };
 
-  const deleteItem = (id) => {
-    const newSavedBrands = savedBrands.filter((brand) => brand.id !== id);
-    setSavedBrands(newSavedBrands);
-  };
+  const deleteItem = useBrandStore((state) => state.deleteItem);
+  // const deleteItem = (id) => {
+  //   const newSavedBrands = savedBrands.filter((brand) => brand.id !== id);
+  //   setSavedBrands(newSavedBrands);
+  // };
 
   return (
     <div className="wrapper">
