@@ -1,5 +1,5 @@
 // icons
-import { FaTrash, FaPaintBrush } from "react-icons/fa";
+import { FaTrash, FaEye } from "react-icons/fa";
 
 export const SavedBrandsComponent = ({ brands, deleteItem, previewItem }) => {
   return brands.map(({ id, primaryColor, primaryFont, secondaryFont }) => {
@@ -16,7 +16,7 @@ export const SavedBrandsComponent = ({ brands, deleteItem, previewItem }) => {
               previewItem(primaryColor, primaryFont, secondaryFont)
             }
           >
-            <FaPaintBrush />
+            <FaEye />
           </button>
           <button className="icon-button" onClick={() => deleteItem(id)}>
             <FaTrash />
